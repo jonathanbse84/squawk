@@ -59,13 +59,24 @@
   #home{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 38%, #0a2416, #04120b 72%);padding:20px;overflow:auto;}
   #home.show{display:flex;}
   .hcard{width:100%;max-width:360px;text-align:center;}
-  .htitle{font-size:36px;font-weight:800;color:var(--green);letter-spacing:.02em;text-shadow:0 0 18px rgba(56,224,139,.4);}
-  .hver{font-size:12px;color:var(--green-dim);margin:2px 0 14px;}
-  .htxt{font-size:13px;color:var(--ink);line-height:1.5;margin:0 0 12px;}
-  .hlbl{display:block;text-align:left;font-size:11px;color:var(--green-dim);margin:10px 2px 4px;}
-  .hinput,.hsel{width:100%;height:44px;border-radius:11px;border:1px solid var(--green-dim);background:rgba(6,26,16,.85);color:var(--ink);font-size:15px;padding:0 12px;font-family:inherit;-webkit-appearance:none;}
-  .hplay{width:100%;height:52px;margin-top:18px;border:none;border-radius:13px;background:var(--green);color:#04120b;font-size:18px;font-weight:800;letter-spacing:.03em;}
+  .hlogo{width:88px;height:88px;display:block;margin:0 auto 4px;}
+  .htitle{font-size:34px;font-weight:800;color:var(--green);letter-spacing:.04em;text-shadow:0 0 18px rgba(56,224,139,.4);}
+  .hver{font-size:12px;color:var(--green-dim);margin:2px 0 10px;}
+  .htxt{font-size:13px;color:var(--ink);line-height:1.45;margin:0 0 8px;}
+  .hlbl{display:block;text-align:left;font-size:11px;color:var(--green-dim);margin:8px 2px 4px;}
+  .hinput,.hsel{width:100%;height:42px;border-radius:11px;border:1px solid var(--green-dim);background:rgba(6,26,16,.85);color:var(--ink);font-size:15px;padding:0 12px;font-family:inherit;-webkit-appearance:none;}
+  .hplay{width:100%;height:50px;margin-top:14px;border:none;border-radius:13px;background:var(--green);color:#04120b;font-size:18px;font-weight:800;letter-spacing:.03em;}
   .hplay:active{background:#2bd07f;}
+  .hleft,.hright{width:100%;}
+  @media (orientation:landscape) and (max-height:600px){
+    .hcard{max-width:800px;display:flex;gap:34px;align-items:center;text-align:left;}
+    .hleft,.hright{flex:1;min-width:0;}
+    .hlogo{margin:0 0 6px;}
+    .htitle{font-size:30px;}
+    .htxt{margin-bottom:0;}
+    .hplay{margin-top:10px;}
+    .hlbl{margin-top:6px;}
+  }
   #oMenu{background:transparent;border:1px solid var(--green-dim);color:var(--ink);}
   #pauseBtn{position:fixed;top:calc(env(safe-area-inset-top,0px)+46px);right:98px;z-index:8;width:38px;height:38px;border-radius:9px;border:1px solid var(--green-dim);background:rgba(6,26,16,.82);color:var(--green);font-size:15px;backdrop-filter:blur(4px);}
   #speedBtn{position:fixed;top:calc(env(safe-area-inset-top,0px)+46px);right:142px;z-index:8;width:38px;height:38px;border-radius:9px;border:1px solid var(--green-dim);background:rgba(6,26,16,.82);color:var(--green);font-size:13px;font-weight:700;backdrop-filter:blur(4px);}
@@ -89,6 +100,14 @@
   #boardList{text-align:left;font-family:ui-monospace,Menlo,monospace;font-size:14px;color:var(--ink);margin:14px 0;max-height:52vh;overflow:auto;}
   #boardList .me{color:var(--green);font-weight:700;}
   #boardList div{padding:5px 2px;border-bottom:1px solid rgba(28,122,77,.25);display:flex;justify-content:space-between;gap:12px;}
+  #help{position:fixed;inset:0;z-index:32;display:none;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 38%, #0a2416, #04120b 72%);padding:20px;overflow:auto;}
+  #help.show{display:flex;}
+  .hcard-wide{max-width:600px;}
+  .helpbody{text-align:left;max-height:66vh;overflow:auto;margin:12px 0;font-size:14px;color:var(--ink);line-height:1.5;-webkit-overflow-scrolling:touch;}
+  .helpbody h3{color:var(--green);font-size:15px;margin:14px 0 3px;}
+  .helpbody h3:first-child{margin-top:0;}
+  .helpbody p{margin:3px 0;color:#cfe7da;}
+  .helpbody b{color:var(--ink);}
   #ad{position:fixed;inset:0;z-index:40;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.92);padding:20px;}
   #ad.show{display:flex;}
   .adbox{width:100%;max-width:320px;text-align:center;border:1px dashed rgba(255,255,255,.3);border-radius:16px;padding:28px 20px;background:#0c0c0c;}
@@ -105,16 +124,69 @@
 </head>
 <body>
 <div id="home"><div class="hcard">
-  <div class="htitle" id="hTitle">Vecteur</div>
-  <div class="hver" id="hVer">v1.0 · Tour de contrôle</div>
-  <p class="htxt">Tu es le contrôleur aérien. Fais atterrir et décoller les avions sans collision : vent arrière, base, finale, attente, météo, priorités, drones, OVNIs… 13 niveaux + un bonus.</p>
-  <label class="hlbl">Pseudo</label><input id="homeName" class="hinput" maxlength="24" placeholder="Ton pseudo">
-  <label class="hlbl">Difficulté</label><select id="homeMode" class="hsel"></select>
-  <label class="hlbl">Niveau</label><select id="homeLevel" class="hsel"></select>
-  <div id="homeEnergy" class="henergy"></div>
-  <div id="homeProg" class="hprog"></div>
-  <button id="playBtn" class="hplay">JOUER</button>
-  <div class="hrow"><button id="boardBtn" class="hsec">🏆 Classement</button></div>
+  <div class="hleft">
+    <svg class="hlogo" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="60" cy="60" r="55" fill="#08281a" stroke="#37f0a0" stroke-width="2"/>
+      <circle cx="60" cy="60" r="37" fill="none" stroke="#37f0a0" stroke-opacity=".35"/>
+      <circle cx="60" cy="60" r="19" fill="none" stroke="#37f0a0" stroke-opacity=".35"/>
+      <line x1="60" y1="7" x2="60" y2="113" stroke="#37f0a0" stroke-opacity=".18"/>
+      <line x1="7" y1="60" x2="113" y2="60" stroke="#37f0a0" stroke-opacity=".18"/>
+      <path d="M60 60 L112 47 L112 73 Z" fill="#37f0a0" fill-opacity=".22"/>
+      <line x1="60" y1="60" x2="112" y2="60" stroke="#66ffb8" stroke-width="2"/>
+      <g transform="translate(45 45) rotate(35)"><path d="M13 0 L-8 -8 L-3 0 L-8 8 Z" fill="#66ffb8"/></g>
+      <path d="M60 6 l-6 11 h12 z" fill="#ffc24a"/>
+    </svg>
+    <div class="htitle" id="hTitle">Squawk</div>
+    <div class="hver" id="hVer">v1.5 · Tour de contrôle</div>
+    <p class="htxt">Fais atterrir et décoller les avions sans collision. 13 niveaux, météo, priorités, drones et OVNIs.</p>
+    <div id="homeEnergy" class="henergy"></div>
+    <div id="homeProg" class="hprog"></div>
+  </div>
+  <div class="hright">
+    <label class="hlbl">Pseudo</label><input id="homeName" class="hinput" maxlength="24" placeholder="Entrez votre pseudo ici">
+    <label class="hlbl">Difficulté</label><select id="homeMode" class="hsel"></select>
+    <label class="hlbl">Niveau</label><select id="homeLevel" class="hsel"></select>
+    <button id="playBtn" class="hplay">JOUER</button>
+    <div class="hrow"><button id="boardBtn" class="hsec">🏆 Classement</button><button id="helpBtn" class="hsec">❓ Comment jouer</button></div>
+  </div>
+</div></div>
+
+<div id="help"><div class="hcard hcard-wide">
+  <div class="htitle" style="font-size:24px">❓ Comment jouer</div>
+  <div class="helpbody">
+    <h3>Objectif</h3>
+    <p>Tu es le contrôleur. Guide chaque avion sur ton radar et évite toute collision : fais atterrir les arrivées et partir les départs.</p>
+    <h3>Sélectionner &amp; commander</h3>
+    <p>Touche un avion pour le sélectionner. En bas apparaît son panneau : <b>CAP</b> (direction), <b>ALT</b> (altitude), <b>VIT</b> (vitesse). Ajuste avec ◀ ▶ et − +.</p>
+    <h3>Le circuit d'approche (intégration)</h3>
+    <p>Pour poser un avion, amène-le dans le circuit : <b>vent arrière</b> (parallèle à la piste), puis <b>base</b>, puis <b>finale</b> dans l'axe. Bouton <b>Circuit</b> pour l'y engager automatiquement.</p>
+    <h3>Longue finale</h3>
+    <p>Le bouton <b>Finale</b> envoie l'avion directement dans l'axe de piste, sans faire tout le tour. Pratique quand la piste est libre et l'avion bien placé.</p>
+    <h3>Autorisation d'atterrissage</h3>
+    <p>Bouton <b>Poser</b> : donne l'autorisation. Sans elle, l'avion remet les gaz et repart en circuit. Une piste occupée = remise de gaz automatique.</p>
+    <h3>Altitudes &amp; vitesses</h3>
+    <p>Les altitudes sont en pieds ; l'avion descend palier par palier jusqu'à la piste. Sous 10 000 ft, la vitesse est limitée à 250 kt (respecté automatiquement).</p>
+    <h3>Carburant</h3>
+    <p>Certains avions arrivent en <b>panne de carburant</b> (⚠) : traite-les en priorité, sinon c'est le crash. Surveille les niveaux critiques.</p>
+    <h3>Séparation &amp; collisions</h3>
+    <p>Garde les avions espacés. Alarme <b>orange</b> = rapprochement dangereux (anticipe), <b>rouge</b> = perte de séparation. Trop près = collision et vie perdue.</p>
+    <h3>Priorités</h3>
+    <p>Vols <b>médical (✚)</b> et <b>présidentiel (★)</b> passent avant les autres : gère-les en premier.</p>
+    <h3>Départs &amp; points de sortie</h3>
+    <p>Les décollages doivent quitter la zone par un point de navigation : <b>N, E, S, W</b> (triangles ambre au bord du radar). Dirige-les vers le bon point.</p>
+    <h3>Mise en attente</h3>
+    <p>Bouton <b>Attente</b> : place l'avion en hippodrome pour gagner du temps quand le trafic est chargé.</p>
+    <h3>Trafic spécial</h3>
+    <p><b>Drones</b> (carré violet) et <b>OVNIs</b> (magenta) sont incontrôlables : contourne-les. Les <b>chasseurs</b> sont rapides. À toi d'adapter les autres avions.</p>
+    <h3>Météo</h3>
+    <p>Les <b>orages</b> (⛈) se déplacent. Un avion qui les traverse est perdu : détourne-le à temps.</p>
+    <h3>Fin de niveau &amp; étoiles</h3>
+    <p>Le niveau se termine quand le ciel est vide. Tu gagnes 1 à 3 ★ : objectif atteint, zéro conflit, tout traité proprement.</p>
+    <h3>Vies</h3>
+    <p>Tu as un nombre de vies limité (elles se régénèrent avec le temps). À court de vies, tu peux regarder une pub pour en récupérer une.</p>
+  </div>
+  <button id="helpClose" class="hplay">Fermer</button>
+</div></div>
 </div></div>
 <div id="board"><div class="hcard">
   <div class="htitle" style="font-size:26px">🏆 Classement</div>
@@ -617,12 +689,37 @@ function fmtMs(ms){const s=Math.ceil(ms/1000);return Math.floor(s/60)+":"+String
 function energyStr(){const {e}=energyGet();return "♥".repeat(e)+"♡".repeat(ENERGY_MAX-e)+(e<ENERGY_MAX?"  · +1 dans "+fmtMs(energyNextMs()):"");}
 function showEnergyPrompt(){el("energyScr").classList.add("show");el("enTimer").textContent="Prochaine vie dans "+fmtMs(energyNextMs());}
 
-// ---- Pubs (mock en web ; AdMob natif dans le build Capacitor) -------------
+// ---- Pubs (AdMob natif si dispo ; démo en web/aperçu) -------------
 let adCooldown=0;
+const ADS=window.ATC_ADS||{};
+function nativeAdMob(){try{const c=window.Capacitor;if(c&&c.isNativePlatform&&c.isNativePlatform()&&c.Plugins&&c.Plugins.AdMob)return c.Plugins.AdMob;}catch(e){}return null;}
+let admobReady=false,admobInit=null;
+async function ensureAds(){const A=nativeAdMob();if(!A)return null;if(admobReady)return A;if(!admobInit){admobInit=A.initialize({initializeForTesting:false,requestTrackingAuthorization:false}).then(()=>{admobReady=true;}).catch(()=>{});}try{await admobInit;}catch(e){}return admobReady?A:null;}
 function playAd(title,secs,reward,cb){const a=el("ad");el("adTitle").textContent=title;a.classList.add("show");let t=secs;const b=el("adBtn");b.disabled=true;b.onclick=null;b.textContent=(reward?"Récompense dans ":"Passer dans ")+secs+" s";
   const iv=setInterval(()=>{t--;if(t<=0){clearInterval(iv);b.disabled=false;b.textContent=reward?"Réclamer +1 vie":"Continuer";b.onclick=()=>{a.classList.remove("show");cb&&cb(true);};}else{b.textContent=(reward?"Récompense dans ":"Passer dans ")+t+" s";}},1000);}
-function showInterstitial(done){const now=Date.now();if(now-adCooldown<45000){done&&done();return;}adCooldown=now;playAd("Publicité",3,false,()=>done&&done());}
-function showRewarded(done){playAd("Pub récompensée",4,true,ok=>done&&done(ok));}
+async function showInterstitial(done){const now=Date.now();if(now-adCooldown<45000){done&&done();return;}adCooldown=now;
+  const A=await ensureAds();
+  if(A&&ADS.interstitial){try{
+    let hs=[];const clean=()=>{hs.forEach(h=>{try{h&&h.remove&&h.remove();}catch(e){}});hs=[];};
+    let fin=false;const fire=()=>{if(fin)return;fin=true;clean();done&&done();};
+    hs.push(await A.addListener('interstitialAdDismissed',fire));
+    hs.push(await A.addListener('interstitialAdFailedToShow',fire));
+    await A.prepareInterstitial({adId:ADS.interstitial});
+    await A.showInterstitial();return;
+  }catch(e){done&&done();return;}}
+  playAd("Publicité",3,false,()=>done&&done());}
+async function showRewarded(done){
+  const A=await ensureAds();
+  if(A&&ADS.rewarded){try{
+    let hs=[],earned=false,fin=false;const clean=()=>{hs.forEach(h=>{try{h&&h.remove&&h.remove();}catch(e){}});hs=[];};
+    const end=()=>{if(fin)return;fin=true;clean();done&&done(earned);};
+    hs.push(await A.addListener('onRewardedVideoAdReward',()=>{earned=true;}));
+    hs.push(await A.addListener('onRewardedVideoAdDismissed',end));
+    hs.push(await A.addListener('onRewardedVideoAdFailedToShow',end));
+    await A.prepareRewardVideoAd({adId:ADS.rewarded});
+    await A.showRewardVideoAd();return;
+  }catch(e){done&&done(false);return;}}
+  playAd("Pub récompensée",4,true,ok=>done&&done(ok));}
 
 // ---- Rendu --------------------------------------------------------------
 function render(){
@@ -911,18 +1008,23 @@ el("oBtn").addEventListener("click",()=>{if(energyGet().e<1){el("overlay").class
 el("oNext").addEventListener("click",()=>{if(energyGet().e<1){el("overlay").classList.remove("show");showEnergyPrompt();return;}showInterstitial(()=>{initLevel(levelIdx+1);startLevel();});});
 el("endBtn").addEventListener("click",()=>endLevel(true));
 
-const APP_NAME="Squawk", VERSION="1.2";
-function showHome(){state="home";el("home").classList.add("show");try{el("homeName").value=getName();}catch(e){}el("homeEnergy").textContent="Vies : "+energyStr();const pg=progGet();
+const APP_NAME="Squawk", VERSION="1.6";
+function showHome(){state="home";el("home").classList.add("show");
+  let saved="";try{saved=localStorage.getItem("atc_name")||"";}catch(e){}
+  el("homeName").value=/^PIL-/.test(saved)?"":saved; // champ vide -> l'invite s'affiche
+  el("homeEnergy").textContent="Vies : "+energyStr();const pg=progGet();
   const ls=el("homeLevel");ls.innerHTML="";for(let i=0;i<=pg;i++){const o=document.createElement("option");o.value=i;o.textContent="N"+(i+1)+" — "+LEVELS[i].name;ls.appendChild(o);}ls.value=pg;
   el("homeProg").textContent="Débloqué : "+(pg+1)+"/"+LEVELS.length+" niveaux";el("playBtn").textContent="JOUER";}
 (function initHome(){
-  el("hTitle").textContent="🛬 "+APP_NAME;
+  el("hTitle").textContent=APP_NAME;
   el("hVer").textContent="v"+VERSION+" · Tour de contrôle";
   const ms=el("homeMode");MODES.forEach((m,i)=>{const o=document.createElement("option");o.value=i;o.textContent=m.name;ms.appendChild(o);});ms.value="1";
 })();
 el("playBtn").addEventListener("click",()=>{unlockAudio();if(energyGet().e<1){showEnergyPrompt();return;}const nm=el("homeName").value.trim();if(nm){try{localStorage.setItem("atc_name",nm.slice(0,24));}catch(e){}}modeIdx=+el("homeMode").value;const lv=Math.min(progGet(),Math.max(0,+el("homeLevel").value||0));initLevel(lv);startLevel();el("home").classList.remove("show");});
 el("boardBtn").addEventListener("click",openBoard);
 el("boardClose").addEventListener("click",()=>{el("board").classList.remove("show");});
+el("helpBtn").addEventListener("click",()=>{el("help").classList.add("show");});
+el("helpClose").addEventListener("click",()=>{el("help").classList.remove("show");});
 function openBoard(){
   el("board").classList.add("show");
   const pg=progGet(),bs=el("boardLevel");bs.innerHTML="";
